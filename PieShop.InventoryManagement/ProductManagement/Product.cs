@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PieShop.InventoryManagement.General;
 
-namespace PieShop.InventoryManagement
+namespace PieShop.InventoryManagement.ProductManagement
 {
-    public class Product
+    public partial class Product
     {
         private int MaxItemsInStock = 0;
 
@@ -45,7 +46,7 @@ namespace PieShop.InventoryManagement
         }
         public Product(int maxItemsInStock, int id, string name, string? description, UnitType unitType, Price price)
         {
-            this.MaxItemsInStock = maxItemsInStock;
+            MaxItemsInStock = maxItemsInStock;
             Id = id;
             Name = name;
             Description = description;
@@ -56,7 +57,7 @@ namespace PieShop.InventoryManagement
         }
         public Product(int id, string Name)
         {
-            this.Id = id;
+            Id = id;
             this.Name = Name;
         }
 
@@ -79,7 +80,7 @@ namespace PieShop.InventoryManagement
         public void AddIntoStock(int amount)
         {
             int newStock = AmountInStock + amount;
-            if(newStock > MaxItemsInStock)
+            if (newStock > MaxItemsInStock)
             {
                 AmountInStock = MaxItemsInStock;
                 Log($"Stock overflow, only {newStock - AmountInStock} were taken");
@@ -93,43 +94,13 @@ namespace PieShop.InventoryManagement
         {
             AmountInStock++;
         }
-        private void UpdateLowStock()
-        {
-            if (AmountInStock <= 10)
-            {
-                this.IsBelowStockThreshold = true;
-            }
-            else
-            {
-                this.IsBelowStockThreshold = false;
-            }
-            LongDescription();
-        }
-
-        private void Log(string message)
-        {
-            Console.WriteLine(message);
-        }
-        private void DecreaseStock(int items, string reason)
-        {
-            if(AmountInStock >= items)
-            {
-                AmountInStock -= items;
-            }
-            else
-            {
-                AmountInStock = 0;
-            }
-            UpdateLowStock();
-            Log(reason);
-        }
         public void ShortDecription()
         {
-            Log($"Product {Name} with ID {this.Id}");
+            Log($"Product {Name} with ID {Id}");
         }
         public void LongDescription()
         {
-            Log($"Product: {this.Name}\nID: {this.Id}\nDescription: {this.Description}\nAmount in stock: {AmountInStock}\n" +
+            Log($"Product: {Name}\nID: {Id}\nDescription: {Description}\nAmount in stock: {AmountInStock}\n" +
                 $"Maximum items this product can have: {MaxItemsInStock}\nPrice: {Price}");
             if (IsBelowStockThreshold)
             {
