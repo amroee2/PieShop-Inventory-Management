@@ -212,11 +212,37 @@ namespace PieShop.InventoryManagement
                         order.OrderItems.Add(new OrderItem { Id = id, ProductName = name, ProductId = productId, AmountOrdered = amount });
                         break;
                     case 2:
+                        UpdateStock(order);
                         order.ShowOrderDetails();
                         Orders.Add(order);
                         return;
                 }
             }
+        }
+        public static void UpdateStock(Order order)
+        {
+            foreach(OrderItem orderItem in order.OrderItems)
+            {
+                Product? product = ProductID(orderItem.ProductId);
+                if (product == null)
+                {
+                    Console.WriteLine($"Product {orderItem.ProductId}. {orderItem.ProductName} doesnt exist in the system");
+                    continue;
+                }
+                product.AddIntoStock(orderItem.AmountOrdered);
+            }
+        }
+        public static Product ProductID(int id)
+        {
+            foreach(Product product in Products)
+            {
+                if(product.Id == id)
+                {
+                    return product;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace PieShop.InventoryManagement.General
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"{ItemPrice} {Currency}";
         }
     }
 }
