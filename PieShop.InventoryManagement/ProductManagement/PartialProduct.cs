@@ -18,7 +18,6 @@ namespace PieShop.InventoryManagement.ProductManagement
             {
                 IsBelowStockThreshold = false;
             }
-            LongDescription();
         }
 
         private void Log(string message)

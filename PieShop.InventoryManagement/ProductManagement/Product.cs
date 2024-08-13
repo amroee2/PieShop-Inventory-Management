@@ -1,40 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PieShop.InventoryManagement.General;
+﻿using PieShop.InventoryManagement.General;
 
 namespace PieShop.InventoryManagement.ProductManagement
 {
     public partial class Product
     {
+        // Private backing fields
+        private int _id;
+        private string? _name;
+        private string? _description;
+
         private int MaxItemsInStock = 0;
         private static int StockThreshold = 5;
+
         public int Id
         {
-            get { return Id; }
-            set
-            {
-                Id = value;
-            }
+            get { return _id; }
+            set { _id = value; }
         }
+
         public string? Name
         {
-            get { return Name; }
-            set
-            {
-                Name = value;
-            }
+            get { return _name; }
+            set { _name = value; }
         }
+
         public string? Description
         {
-            get { return Description; }
-            set
-            {
-                Description = value;
-            }
+            get { return _description; }
+            set { _description = value; }
         }
+
         public UnitType UnitType { get; set; }
         public Price Price { get; set; }
         public int AmountInStock { get; private set; }
@@ -42,9 +37,9 @@ namespace PieShop.InventoryManagement.ProductManagement
 
         public Product()
         {
-
         }
-        public Product(int maxItemsInStock, int id, string name, string? description, UnitType unitType, Price price)
+
+        public Product(int id, string name, string? description, UnitType unitType, Price price, int maxItemsInStock)
         {
             MaxItemsInStock = maxItemsInStock;
             Id = id;
@@ -55,10 +50,11 @@ namespace PieShop.InventoryManagement.ProductManagement
 
             UpdateLowStock();
         }
-        public Product(int id, string Name)
+
+        public Product(int id, string name)
         {
             Id = id;
-            this.Name = Name;
+            Name = name;
         }
 
         public void UseItem(int amount)
@@ -66,17 +62,17 @@ namespace PieShop.InventoryManagement.ProductManagement
             if (amount > AmountInStock)
             {
                 Log($"Not enough amount in stock\n");
-                ShortDecription();
+                ShortDescription();
             }
             else
             {
-                Log($"Product used successfull\n");
-                ShortDecription();
+                Log($"Product used successfully\n");
+                ShortDescription();
                 AmountInStock -= amount;
                 UpdateLowStock();
-
             }
         }
+
         public void AddIntoStock(int amount)
         {
             int newStock = AmountInStock + amount;
@@ -90,18 +86,19 @@ namespace PieShop.InventoryManagement.ProductManagement
                 AmountInStock += amount;
             }
         }
+
         public void AddIntoStock()
         {
             AmountInStock++;
         }
-        public void ShortDecription()
+
+        public void ShortDescription()
         {
             Log($"{Id}. {Name}");
         }
         public void LongDescription()
         {
-            Log($"Product: {Name}\nID: {Id}\nDescription: {Description}\nAmount in stock: {AmountInStock}\n" +
-                $"Maximum items this product can have: {MaxItemsInStock}\nPrice: {Price}");
+            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price} {Price.Currency}, Max Stock = {MaxItemsInStock}");
             if (IsBelowStockThreshold)
             {
                 Log("STOCK IS LOW!!");
@@ -109,7 +106,7 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
         public void UpdateThreshold(int amount)
         {
-            if(amount > 0)
+            if (amount > 0)
             {
                 StockThreshold = amount;
             }

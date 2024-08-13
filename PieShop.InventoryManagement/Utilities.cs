@@ -1,4 +1,5 @@
-﻿using PieShop.InventoryManagement.OrderManagement;
+﻿using PieShop.InventoryManagement.General;
+using PieShop.InventoryManagement.OrderManagement;
 using PieShop.InventoryManagement.ProductManagement;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace PieShop.InventoryManagement
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Welcome!\n1: Inventory Management\n2: Order Management\n3: Settings\n" +
     "4: Save all data\n0: Close Application");
                 int operation = Convert.ToInt32(Console.ReadLine());
@@ -43,25 +45,41 @@ namespace PieShop.InventoryManagement
         public static void IneventoryManagementOperation()
         {
             Console.Clear();
-            Console.WriteLine("Inventory Management\n");
-            foreach (Product product in Products)
+            while (true)
             {
-                product.ShortDecription();
-            }
-            Console.WriteLine("1: View details of a product\n2: Add a new product\n" +
-                "3: Clone product\n4: View Product\n0: Back to main menu");
-            int operation = Convert.ToInt32(Console.ReadLine());
-            switch (operation) { 
-                case 0:
-                    return;
-                case 1:
-                    
-                    break;
-
+                Console.WriteLine("Inventory Management\n");
+                foreach (Product product in Products)
+                {
+                    product.ShortDescription();
+                }
+                Console.WriteLine("1: View details of a product\n2: Add a new product\n" +
+                    "3: Clone product\n4: View all Products details\n0: Back to main menu");
+                int operation = Convert.ToInt32(Console.ReadLine());
+                switch (operation)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        ViewProductDetails();
+                        break;
+                    case 2:
+                        AddNewProduct();
+                        break;
+                    case 4:
+                        ViewAll();
+                        break;
+                }
             }
         }
         public static void OrderManagementOperation()
         {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Order Management\n");
+
+                Console.WriteLine("");
+            }
         }
         public static void Settings()
         {
@@ -73,6 +91,79 @@ namespace PieShop.InventoryManagement
         }
         public static void AddNewProduct()
         {
+            Console.WriteLine("Id:");
+            int id = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("\nName:");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("\nMaximum items in stock:");
+            int maxItems = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("\nDescription:");
+            string? description = Console.ReadLine();
+
+            UnitType unitType;
+            while (true)
+            {
+                Console.Write("Enter the unit type (PerItem, PerBox, PerKg): ");
+                string input = Console.ReadLine();
+
+                if (Enum.TryParse(input, true, out unitType))
+                {
+                    Console.WriteLine($"You selected: {unitType}");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid unit type entered. Please try again.");
+                }
+            }
+
+            Console.WriteLine("\nPrice:");
+            int price = Convert.ToInt32(Console.ReadLine());
+
+            Currency currency;
+            while (true)
+            {
+                Console.Write("Enter the currency (Dollar, Euro, Pound): ");
+                string input = Console.ReadLine();
+
+                if (Enum.TryParse(input, true, out currency))
+                {
+                    Console.WriteLine($"You selected: {currency}");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid currency entered. Please try again.");
+                }
+            }
+
+            Product product = new Product(id, name, description, unitType, new General.Price(price, currency), maxItems);
+            product.LongDescription();
+            Products.Add(product);
+        }
+        public static void ViewProductDetails()
+        {
+            Console.WriteLine("Product id:\n");
+            int id = Convert.ToInt32(Console.ReadLine());
+
+            foreach (Product product in Products)
+            {
+                if(product.Id == id)
+                {
+                    product.LongDescription();
+                    break;
+                }
+            }
+        }
+        public static void ViewAll()
+        {
+            foreach(Product product in Products)
+            {
+                product.LongDescription();
+            }
         }
     }
 
