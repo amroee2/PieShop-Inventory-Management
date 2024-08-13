@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PieShop.InventoryManagement
+namespace PieShop.InventoryManagement.ProductManagement
 {
-    public enum Currency
+    public enum UnitType
     {
-        Dollar,
-        Euro,
-        Pound
+        PerItem,
+        PerBox,
+        PerKg
+
     }
 }
