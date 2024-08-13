@@ -18,7 +18,7 @@ namespace PieShop.InventoryManagement
                 Id = value;
             }
         }
-        public int Name
+        public string? Name
         {
             get { return Name; }
             set
@@ -38,6 +38,25 @@ namespace PieShop.InventoryManagement
         public int AmountInStock { get; private set; }
         public bool IsBelowStockThreshold { get; private set; }
 
+        public Product()
+        {
+
+        }
+        public Product(int maxItemsInStock, int id, string name, string? description, UnitType unitType)
+        {
+            this.maxItemsInStock = maxItemsInStock;
+            Id = id;
+            Name = name;
+            Description = description;
+            UnitType = unitType;
+            UpdateLowStock();
+        }
+        public Product(int id, string Name)
+        {
+            this.Id = id;
+            this.Name = Name;
+        }
+
         public void UseItem(int amount)
         {
             if (amount > AmountInStock)
@@ -56,13 +75,30 @@ namespace PieShop.InventoryManagement
         }
         public void AddIntoStock(int amount)
         {
-            AmountInStock += amount;
+            int newStock = AmountInStock + amount;
+            if(newStock > maxItemsInStock)
+            {
+                AmountInStock = maxItemsInStock;
+                Log($"Stock overflow, only {newStock - AmountInStock} were taken");
+            }
+            else
+            {
+                AmountInStock += amount;
+            }
+        }
+        public void AddIntoStock()
+        {
+            AmountInStock++;
         }
         private void UpdateLowStock()
         {
             if (AmountInStock <= 10)
             {
                 this.IsBelowStockThreshold = true;
+            }
+            else
+            {
+                this.IsBelowStockThreshold = false;
             }
             LongDescription();
         }
