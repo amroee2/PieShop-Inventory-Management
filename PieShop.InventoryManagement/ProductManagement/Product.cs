@@ -85,6 +85,7 @@ namespace PieShop.InventoryManagement.ProductManagement
             {
                 AmountInStock += amount;
             }
+            UpdateLowStock();
         }
 
         public void AddIntoStock()
@@ -98,7 +99,7 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
         public void LongDescription()
         {
-            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price} {Price.Currency}, Max Stock = {MaxItemsInStock}");
+            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price} {Price.Currency}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}");
             if (IsBelowStockThreshold)
             {
                 Log("STOCK IS LOW!!");
