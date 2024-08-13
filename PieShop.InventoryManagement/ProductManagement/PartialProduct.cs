@@ -10,7 +10,7 @@ namespace PieShop.InventoryManagement.ProductManagement
     {
         private void UpdateLowStock()
         {
-            if (AmountInStock <= 10)
+            if (AmountInStock <= StockThreshold)
             {
                 IsBelowStockThreshold = true;
             }

@@ -10,7 +10,7 @@ namespace PieShop.InventoryManagement.ProductManagement
     public partial class Product
     {
         private int MaxItemsInStock = 0;
-
+        private static int StockThreshold = 5;
         public int Id
         {
             get { return Id; }
@@ -96,7 +96,7 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
         public void ShortDecription()
         {
-            Log($"Product {Name} with ID {Id}");
+            Log($"{Id}. {Name}");
         }
         public void LongDescription()
         {
@@ -105,6 +105,13 @@ namespace PieShop.InventoryManagement.ProductManagement
             if (IsBelowStockThreshold)
             {
                 Log("STOCK IS LOW!!");
+            }
+        }
+        public void UpdateThreshold(int amount)
+        {
+            if(amount > 0)
+            {
+                StockThreshold = amount;
             }
         }
     }
