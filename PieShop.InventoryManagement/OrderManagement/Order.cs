@@ -21,5 +21,15 @@ namespace PieShop.InventoryManagement.OrderManagement
             OrderFulfilmentDate = DateTime.Now.AddSeconds(numberOfSeconds);
 
         }
+        public void ShowOrderDetails()
+        {
+            if (OrderItems.Count > 0)
+            {
+                foreach (var item in OrderItems)
+                {
+                    Console.WriteLine($"{item.Id} - {item.ProductId}. {item.ProductName} - {item.AmountOrdered}");
+                }
+            }
+        }
     }
 }

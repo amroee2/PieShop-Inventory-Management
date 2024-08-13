@@ -66,7 +66,7 @@ namespace PieShop.InventoryManagement
                         AddNewProduct();
                         break;
                     case 4:
-                        ViewAll();
+                        ViewAllProducts();
                         break;
                 }
             }
@@ -75,10 +75,23 @@ namespace PieShop.InventoryManagement
         {
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("Order Management\n");
 
-                Console.WriteLine("");
+                Console.WriteLine("1: Open order overview\n2: Add new order\n0: Back to main menu");
+                int op = Convert.ToInt32(Console.ReadLine());
+
+                switch (op)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        ShowPendingOrders();
+                        break;
+                    case 2:
+                        AddNewOrder();
+                        break;
+
+                }
             }
         }
         public static void Settings()
@@ -94,13 +107,13 @@ namespace PieShop.InventoryManagement
             Console.WriteLine("Id:");
             int id = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("\nName:");
+            Console.WriteLine("Name:");
             string name = Console.ReadLine();
 
-            Console.WriteLine("\nMaximum items in stock:");
+            Console.WriteLine("Maximum items in stock:");
             int maxItems = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("\nDescription:");
+            Console.WriteLine("Description:");
             string? description = Console.ReadLine();
 
             UnitType unitType;
@@ -158,13 +171,52 @@ namespace PieShop.InventoryManagement
                 }
             }
         }
-        public static void ViewAll()
+        public static void ViewAllProducts()
         {
             foreach(Product product in Products)
             {
                 product.LongDescription();
             }
         }
-    }
+        public static void ShowPendingOrders()
+        {
+            foreach(Order order in Orders)
+            {
+                if (!order.Fullfilled)
+                {
+                   order.ShowOrderDetails();
+                }
+            }
+        }
+        public static void AddNewOrder()
+        {
+            Order order = new Order();
+            while (true)
+            {
+                Console.WriteLine("1- Add new Item\n2- Finish Order");
+                int op = Convert.ToInt32(Console.ReadLine());
+                switch (op) 
+                { 
+                    case 1:
+                        Console.WriteLine("Order Item Id:");
+                        int id = Convert.ToInt32(Console.ReadLine());
 
+                        Console.WriteLine("Product Id:");
+                        int productId = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("Name:");
+                        string name = Console.ReadLine();
+
+                        Console.WriteLine("Amount: ");
+                        int amount = Convert.ToInt32(Console.ReadLine());
+                        order.OrderItems.Add(new OrderItem { Id = id, ProductName = name, ProductId = productId, AmountOrdered = amount });
+                        break;
+                    case 2:
+                        order.ShowOrderDetails();
+                        Orders.Add(order);
+                        return;
+                }
+            }
+        }
+    }
 }
