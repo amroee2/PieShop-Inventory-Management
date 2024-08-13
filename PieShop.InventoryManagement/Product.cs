@@ -8,7 +8,7 @@ namespace PieShop.InventoryManagement
 {
     public class Product
     {
-        private int maxItemsInStock = 0;
+        private int MaxItemsInStock = 0;
 
         public int Id
         {
@@ -35,6 +35,7 @@ namespace PieShop.InventoryManagement
             }
         }
         public UnitType UnitType { get; set; }
+        public Price Price { get; set; }
         public int AmountInStock { get; private set; }
         public bool IsBelowStockThreshold { get; private set; }
 
@@ -42,13 +43,15 @@ namespace PieShop.InventoryManagement
         {
 
         }
-        public Product(int maxItemsInStock, int id, string name, string? description, UnitType unitType)
+        public Product(int maxItemsInStock, int id, string name, string? description, UnitType unitType, Price price)
         {
-            this.maxItemsInStock = maxItemsInStock;
+            this.MaxItemsInStock = maxItemsInStock;
             Id = id;
             Name = name;
             Description = description;
             UnitType = unitType;
+            Price = price;
+
             UpdateLowStock();
         }
         public Product(int id, string Name)
@@ -76,9 +79,9 @@ namespace PieShop.InventoryManagement
         public void AddIntoStock(int amount)
         {
             int newStock = AmountInStock + amount;
-            if(newStock > maxItemsInStock)
+            if(newStock > MaxItemsInStock)
             {
-                AmountInStock = maxItemsInStock;
+                AmountInStock = MaxItemsInStock;
                 Log($"Stock overflow, only {newStock - AmountInStock} were taken");
             }
             else
@@ -127,7 +130,7 @@ namespace PieShop.InventoryManagement
         public void LongDescription()
         {
             Log($"Product: {this.Name}\nID: {this.Id}\nDescription: {this.Description}\nAmount in stock: {AmountInStock}\n" +
-                $"Maximum items this product can have: {maxItemsInStock}\n");
+                $"Maximum items this product can have: {MaxItemsInStock}\nPrice: {Price}");
             if (IsBelowStockThreshold)
             {
                 Log("STOCK IS LOW!!");
