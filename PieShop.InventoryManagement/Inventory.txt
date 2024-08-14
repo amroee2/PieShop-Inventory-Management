@@ -1,0 +1,3 @@
+1;Strawbberry;Red Fruit;PerItem;10;Dollar;500
+2;Orange;Orange Fruit;PerItem;30;Dollar;300
+3;Peach;Yellow Fruit;PerKg;60;Dollar;10

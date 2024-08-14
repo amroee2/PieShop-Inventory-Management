@@ -18,7 +18,6 @@ namespace PieShop.InventoryManagement.ProductManagement
             get { return _id; }
             set { _id = value; }
         }
-
         public string? Name
         {
             get { return _name; }
@@ -100,7 +99,7 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
         public void LongDescription()
         {
-            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price} {Price.Currency}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}");
+            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}");
             if (IsBelowStockThreshold)
             {
                 Log("STOCK IS LOW!!");

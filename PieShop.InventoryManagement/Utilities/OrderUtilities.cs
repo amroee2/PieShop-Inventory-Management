@@ -84,7 +84,7 @@ namespace PieShop.InventoryManagement.Utilities
         {
             foreach (OrderItem orderItem in order.OrderItems)
             {
-                Product? product = ProductUtilities.ProductID(orderItem.ProductId);
+                Product? product = ProductUtilities.CheckIfProductExists(orderItem.ProductId);
                 if (product == null)
                 {
                     Console.WriteLine($"Product {orderItem.ProductId}. {orderItem.ProductName} doesnt exist in the system");
