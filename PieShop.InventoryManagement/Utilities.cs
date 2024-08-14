@@ -161,14 +161,27 @@ namespace PieShop.InventoryManagement
         {
             Console.WriteLine("Product id:\n");
             int id = Convert.ToInt32(Console.ReadLine());
+            Product selectedProduct = new Product();
 
             foreach (Product product in Products)
             {
                 if(product.Id == id)
                 {
-                    product.LongDescription();
+                    selectedProduct = product;
+                    selectedProduct.LongDescription();
                     break;
                 }
+            }
+            Console.WriteLine("What do you want to do\n1- Use Product\n2- Go Back");
+            int op = Convert.ToInt32(Console.ReadLine());
+            switch (op)
+            {
+                case 2: return;
+                case 1:
+                    Console.WriteLine("Enter the amount");
+                    int amount = Convert.ToInt32(Console.ReadLine());
+                    selectedProduct.UseItem(amount);
+                    break;
             }
         }
         public static void ViewAllProducts()
@@ -180,14 +193,20 @@ namespace PieShop.InventoryManagement
         }
         public static void ShowPendingOrders()
         {
-            foreach(Order order in Orders)
+            List<Order> ordersCopy = new List<Order>(Orders);
+
+            foreach (Order order in ordersCopy)
             {
-                if (!order.Fullfilled)
+                if (!order.Fullfilled && order.OrderFulfilmentDate < DateTime.Now)
                 {
-                   order.ShowOrderDetails();
+                    order.ShowOrderDetails();
+                    UpdateStock(order);
                 }
             }
+
+            Orders.RemoveAll(o => o.Fullfilled);
         }
+
         public static void AddNewOrder()
         {
             Order order = new Order();
@@ -212,7 +231,6 @@ namespace PieShop.InventoryManagement
                         order.OrderItems.Add(new OrderItem { Id = id, ProductName = name, ProductId = productId, AmountOrdered = amount });
                         break;
                     case 2:
-                        UpdateStock(order);
                         order.ShowOrderDetails();
                         Orders.Add(order);
                         return;
@@ -231,6 +249,9 @@ namespace PieShop.InventoryManagement
                 }
                 product.AddIntoStock(orderItem.AmountOrdered);
             }
+            order.Fullfilled = true;
+
+            Console.WriteLine("Fulfilled orders");
         }
         public static Product ProductID(int id)
         {

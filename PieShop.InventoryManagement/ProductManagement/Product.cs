@@ -4,7 +4,6 @@ namespace PieShop.InventoryManagement.ProductManagement
 {
     public partial class Product
     {
-        // Private backing fields
         private int _id;
         private string? _name;
         private string? _description;
