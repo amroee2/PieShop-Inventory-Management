@@ -10,7 +10,24 @@ namespace PieShop.InventoryManagement.ProductManagement
         private string? _name;
         private string? _description;
 
-        private int MaxItemsInStock = 0;
+        private int maxItemsInStock = 0;
+
+        public int MaxItemsInStock
+        {
+            get { return maxItemsInStock; }
+            set {
+                if (value > 0)
+                {
+                    maxItemsInStock = value;
+                }
+                else
+                {
+                    Console.WriteLine("Can't set maximum item in stock less than 0");
+                    maxItemsInStock = 0;
+                }
+            }
+        }
+
         public static int StockThreshold = 5;
 
         public int Id

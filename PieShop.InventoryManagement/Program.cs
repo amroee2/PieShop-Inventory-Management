@@ -10,6 +10,7 @@ namespace PieShop
         {
             ProductRepo.ReadFile();
             GeneralUtilities.ShowMenu();
+            ProductRepo.WriteFile();
         }
 
     }

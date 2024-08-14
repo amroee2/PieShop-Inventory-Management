@@ -30,7 +30,9 @@ namespace PieShop.InventoryManagement
                         Currency currency;
                         Enum.TryParse(parts[5], true, out currency);
                         int maximumInStock = int.Parse(parts[6]);
+                        int amount = int.Parse(parts[7]);
                         Product product = new Product(id, name, description, unitType, new Price(price, currency), maximumInStock);
+                        product.AddIntoStock(amount);
                         ProductUtilities.Products.Add(product);
                     }
                 }
@@ -55,6 +57,20 @@ namespace PieShop.InventoryManagement
                 Console.WriteLine("An unexpected error occurred.");
                 Console.WriteLine(ex.Message);
             }
+        }
+        public static void WriteFile()
+        {
+            string fileName = "C:\\Users\\amro qadadha\\source\\repos\\PieShop.InventoryManagement\\PieShop.InventoryManagement\\Inventory.txt";
+
+            string[] inevntory = new string[ProductUtilities.Products.Count];
+            int i = 0;
+            foreach (Product product in ProductUtilities.Products)
+            {
+                inevntory[i] = $"{product.Id};{product.Name};{product.Description};{product.UnitType};" +
+                    $"{product.Price.ItemPrice};{product.Price.Currency};{product.MaxItemsInStock};{product.AmountInStock}";
+                i++;
+            }
+            File.WriteAllLines(fileName, inevntory);
         }
     }
 }
