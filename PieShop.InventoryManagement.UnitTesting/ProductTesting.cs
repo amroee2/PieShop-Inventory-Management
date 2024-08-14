@@ -63,6 +63,9 @@ namespace PieShop.InventoryManagement.UnitTesting
         public void UnitTest_UpdateLowStockBelowThreshold()
         {
             Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            product.AddIntoStock(100);
+
+
             Product.UpdateThreshold(20);
 
             product.UseItem(90);
@@ -73,6 +76,9 @@ namespace PieShop.InventoryManagement.UnitTesting
         public void UnitTest_UpdateLowStockAboveThreshold()
         {
             Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+
+            product.AddIntoStock(100);
+
             Product.UpdateThreshold(20);
 
             product.UseItem(70);
