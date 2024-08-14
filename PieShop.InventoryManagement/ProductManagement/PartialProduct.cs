@@ -24,18 +24,5 @@ namespace PieShop.InventoryManagement.ProductManagement
         {
             Console.WriteLine(message);
         }
-        private void DecreaseStock(int items, string reason)
-        {
-            if (AmountInStock >= items)
-            {
-                AmountInStock -= items;
-            }
-            else
-            {
-                AmountInStock = 0;
-            }
-            UpdateLowStock();
-            Log(reason);
-        }
     }
 }
