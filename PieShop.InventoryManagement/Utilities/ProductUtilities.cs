@@ -10,7 +10,7 @@ namespace PieShop.InventoryManagement.Utilities
 {
     public class ProductUtilities
     {
-        private static List<Product> Products = new List<Product>();
+        public static List<Product> Products = new List<Product>();
         public static void IneventoryManagementOperation()
         {
             Console.Clear();
