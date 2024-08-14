@@ -1,7 +1,7 @@
 using PieShop.InventoryManagement.General;
 using PieShop.InventoryManagement.ProductManagement;
 
-namespace PieShop.InventoryManagement.UnitTesting
+namespace PieShop.InventoryManagement.UnitTesting.UnitTests
 {
     public class ProductTesting
     {

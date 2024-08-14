@@ -69,16 +69,16 @@ namespace PieShop.InventoryManagement.Utilities
         }
         private static void AddNewProduct()
         {
-            Console.WriteLine("Id:");
+            Console.Write("Id:");
             int id = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Name:");
+            Console.Write("Name:");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Maximum items in stock:");
+            Console.Write("Maximum items in stock:");
             int maxItems = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Description:");
+            Console.Write("Description:");
             string? description = Console.ReadLine();
 
             UnitType unitType;
@@ -89,16 +89,16 @@ namespace PieShop.InventoryManagement.Utilities
 
                 if (Enum.TryParse(input, true, out unitType))
                 {
-                    Console.WriteLine($"You selected: {unitType}");
+                    Console.Write($"You selected: {unitType}");
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid unit type entered. Please try again.");
+                    Console.Write("Invalid unit type entered. Please try again.");
                 }
             }
 
-            Console.WriteLine("\nPrice:");
+            Console.Write("\nPrice:");
             int price = Convert.ToInt32(Console.ReadLine());
 
             Currency currency;
@@ -109,12 +109,12 @@ namespace PieShop.InventoryManagement.Utilities
 
                 if (Enum.TryParse(input, true, out currency))
                 {
-                    Console.WriteLine($"You selected: {currency}");
+                    Console.Write($"You selected: {currency}");
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid currency entered. Please try again.");
+                    Console.Write("Invalid currency entered. Please try again.");
                 }
             }
 
