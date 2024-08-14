@@ -1,16 +1,17 @@
 ﻿using PieShop.InventoryManagement.General;
+using PieShop.InventoryManagement.Utilities;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PieShop.InventoryManagement.ProductManagement
 {
     public partial class Product
     {
-        // Private backing fields
         private int _id;
         private string? _name;
         private string? _description;
 
         private int MaxItemsInStock = 0;
-        private static int StockThreshold = 5;
+        public static int StockThreshold = 5;
 
         public int Id
         {
@@ -105,11 +106,16 @@ namespace PieShop.InventoryManagement.ProductManagement
                 Log("STOCK IS LOW!!");
             }
         }
-        public void UpdateThreshold(int amount)
+        public static void UpdateThreshold(int amount)
         {
             if (amount > 0)
             {
                 StockThreshold = amount;
+                Console.WriteLine("Threshold updated successfully");
+            }
+            foreach(Product product in ProductUtilities.Products)
+            {
+                product.UpdateLowStock();
             }
         }
     }
