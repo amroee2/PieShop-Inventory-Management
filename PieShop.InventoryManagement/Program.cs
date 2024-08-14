@@ -1,4 +1,5 @@
 ﻿using System;
+using PieShop.InventoryManagement;
 using PieShop.InventoryManagement.Utilities;
 
 namespace PieShop
@@ -7,7 +8,9 @@ namespace PieShop
     {
         public static void Main(string[] args)
         {
+            ProductRepo.ReadFile();
             GeneralUtilities.ShowMenu();
+            ProductRepo.WriteFile();
         }
 
     }

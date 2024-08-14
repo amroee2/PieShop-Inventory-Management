@@ -10,7 +10,24 @@ namespace PieShop.InventoryManagement.ProductManagement
         private string? _name;
         private string? _description;
 
-        private int MaxItemsInStock = 0;
+        private int maxItemsInStock = 0;
+
+        public int MaxItemsInStock
+        {
+            get { return maxItemsInStock; }
+            set {
+                if (value > 0)
+                {
+                    maxItemsInStock = value;
+                }
+                else
+                {
+                    Console.WriteLine("Can't set maximum item in stock less than 0");
+                    maxItemsInStock = 0;
+                }
+            }
+        }
+
         public static int StockThreshold = 5;
 
         public int Id
@@ -18,7 +35,6 @@ namespace PieShop.InventoryManagement.ProductManagement
             get { return _id; }
             set { _id = value; }
         }
-
         public string? Name
         {
             get { return _name; }
@@ -100,7 +116,7 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
         public void LongDescription()
         {
-            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price} {Price.Currency}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}");
+            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}");
             if (IsBelowStockThreshold)
             {
                 Log("STOCK IS LOW!!");

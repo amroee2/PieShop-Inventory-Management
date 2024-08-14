@@ -130,7 +130,7 @@ namespace PieShop.InventoryManagement.Utilities
                 product.LongDescription();
             }
         }
-        public static Product ProductID(int id)
+        public static Product CheckIfProductExists(int id)
         {
             foreach (Product product in Products)
             {
