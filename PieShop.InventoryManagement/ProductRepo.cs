@@ -36,7 +36,7 @@ namespace PieShop.InventoryManagement
                         switch (type)
                         {
                             case 1:
-                                product = new Product(id, name, description, unitType, new Price(price, currency), maximumInStock);
+                                product = new RegularProduct(id, name, description, unitType, new Price(price, currency), maximumInStock);
                                 break;
                             case 2:
                                 int amountPerBox = int.Parse(parts[9]);

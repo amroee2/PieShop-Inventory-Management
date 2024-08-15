@@ -4,7 +4,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace PieShop.InventoryManagement.ProductManagement
 {
-    public partial class Product
+    public abstract partial class Product
     {
         private int _id;
         private string? _name;
