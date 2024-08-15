@@ -1,5 +1,6 @@
 ﻿using PieShop.InventoryManagement.General;
 using PieShop.InventoryManagement.ProductManagement;
+using System.ComponentModel.Design.Serialization;
 namespace PieShop.InventoryManagement.Utilities
 {
     public class ProductUtilities
@@ -21,6 +22,9 @@ namespace PieShop.InventoryManagement.Utilities
                     case 1:
                         ViewProductDetails();
                         break;
+                    case 3:
+                        CloneProduct();
+                        break;
                     case 2:
                         AddNewProduct();
                         break;
@@ -30,6 +34,19 @@ namespace PieShop.InventoryManagement.Utilities
                 }
             }
         }
+
+        private static void CloneProduct()
+        {
+            Console.WriteLine("Enter ID of the product");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Product product = CheckIfProductExists(id);
+            Product newProduct = (Product) product.Clone();
+            Console.WriteLine("Enter the ID of the new product");
+            id = Convert.ToInt32(Console.ReadLine());
+            newProduct.Id = id;
+            Products.Add(newProduct);
+        }
+
         public static void ViewProductDetails()
         {
             Console.WriteLine("Product id:\n");

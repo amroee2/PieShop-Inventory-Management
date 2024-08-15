@@ -1,10 +1,11 @@
 ﻿using PieShop.InventoryManagement.General;
 using PieShop.InventoryManagement.Utilities;
 using System.Reflection.Metadata.Ecma335;
+using System.Transactions;
 
 namespace PieShop.InventoryManagement.ProductManagement
 {
-    public abstract partial class Product
+    public abstract partial class Product : ICloneable
     {
         private int _id;
         private string? _name;
@@ -129,5 +130,7 @@ namespace PieShop.InventoryManagement.ProductManagement
                 product.UpdateLowStock();
             }
         }
+
+        public abstract object Clone();
     }
 }

@@ -1,7 +1,7 @@
-1;Strawbberry;Red Fruit;PerItem;10;Dollar;500;200
-2;Orange;Orange Fruit;PerBox;30;Dollar;300;300
-3;Peach;Yellow Fruit;PerBox;60;Dollar;10;10
-4;Cheese;Yellow Food;PerBox;20;Dollar;500;200
-5;Candy;Sweet;PerBox;30;Dollar;500;0
-6;Fish;Sea;PerBox;30;Euro;40;0
-7;Coco;Coco;PerBox;20;Dollar;40;20
+1;Strawbberry;Red Fruit;PerItem;10;Dollar;500;200;1
+2;Orange;Orange Fruit;PerBox;30;Dollar;1000;60;2;5
+3;Peach;Yellow Fruit;PerBox;60;Dollar;10;10;3
+4;Cheese;Yellow Food;PerBox;20;Dollar;500;200;1
+5;Candy;Sweet;PerBox;30;Dollar;500;0;2;10
+6;Fish;Sea;PerBox;30;Euro;40;0;3
+7;Coco;Coco;PerBox;20;Dollar;40;20;1
