@@ -1,11 +1,5 @@
 ﻿using PieShop.InventoryManagement.General;
 using PieShop.InventoryManagement.ProductManagement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PieShop.InventoryManagement.Utilities
 {
     public class ProductUtilities
@@ -63,7 +57,7 @@ namespace PieShop.InventoryManagement.Utilities
                 case 1:
                     Console.WriteLine("Enter the amount");
                     int amount = Convert.ToInt32(Console.ReadLine());
-                    selectedProduct.UseItem(amount);
+                    selectedProduct.UseProduct(amount);
                     break;
             }
         }
@@ -80,27 +74,8 @@ namespace PieShop.InventoryManagement.Utilities
 
             Console.Write("Description:");
             string? description = Console.ReadLine();
-
-            UnitType unitType;
-            while (true)
-            {
-                Console.Write("Enter the unit type (PerItem, PerBox, PerKg): ");
-                string input = Console.ReadLine();
-
-                if (Enum.TryParse(input, true, out unitType))
-                {
-                    Console.Write($"You selected: {unitType}");
-                    break;
-                }
-                else
-                {
-                    Console.Write("Invalid unit type entered. Please try again.");
-                }
-            }
-
-            Console.Write("\nPrice:");
+            Console.Write("Price:");
             int price = Convert.ToInt32(Console.ReadLine());
-
             Currency currency;
             while (true)
             {
@@ -109,18 +84,33 @@ namespace PieShop.InventoryManagement.Utilities
 
                 if (Enum.TryParse(input, true, out currency))
                 {
-                    Console.Write($"You selected: {currency}");
                     break;
                 }
-                else
-                {
-                    Console.Write("Invalid currency entered. Please try again.");
-                }
             }
-
-            Product product = new Product(id, name, description, unitType, new Price(price, currency), maxItems);
-            product.LongDescription();
-            Products.Add(product);
+            UnitType unitType = UnitType.PerKg;
+            Console.WriteLine("\nProduct Type?\n1- Normal Product\n2- FreshProduct\n3- Boxed Product");
+            int productType = Convert.ToInt32(Console.ReadLine());
+            Product product = null;
+            switch (productType)
+            {
+                case 1:
+                    unitType = getunitType(unitType);
+                    product = new Product(id, name, description, unitType, new Price(price, currency), maxItems);
+                    break;
+                case 2:
+                    product = new FreshProduct(id, name, description,unitType, new Price(price, currency), maxItems);
+                    break;
+                case 3:
+                    Console.WriteLine("Amount per box?");
+                    int amount = Convert.ToInt32(Console.ReadLine());
+                    product = new BoxedProduct(id, name, description, new Price(price, currency), maxItems, amount);
+                    break;
+            }
+            if (product != null)
+            {
+                product.LongDescription();
+                Products.Add(product);
+            }
         }
 
         private static void ViewAllProducts()
@@ -141,6 +131,25 @@ namespace PieShop.InventoryManagement.Utilities
             }
 
             return null;
+        }
+        public static UnitType getunitType(UnitType unitType)
+        {
+            while (true)
+            {
+                Console.Write("Enter the unit type (PerItem, PerBox, PerKg): ");
+                string input = Console.ReadLine();
+
+                if (Enum.TryParse(input, true, out unitType))
+                {
+                    Console.Write($"You selected: {unitType}");
+                    break;
+                }
+                else
+                {
+                    Console.Write("Invalid unit type entered. Please try again.");
+                }
+            }
+            return unitType;
         }
     }
 }

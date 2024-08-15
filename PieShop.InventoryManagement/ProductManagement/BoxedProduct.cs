@@ -20,12 +20,12 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
 
 
-        public BoxedProduct(int id, string name, string? description, UnitType unitType, Price price, int maxItemsInStock, int amountPerBox) : base(id, name, description, UnitType.PerBox, price, maxItemsInStock)
+        public BoxedProduct(int id, string name, string? description, Price price, int maxItemsInStock, int amountPerBox) : base(id, name, description, UnitType.PerBox, price, maxItemsInStock)
         {
             AmountPerBox = amountPerBox;
         }
 
-        public void UseBoxedProduct(int items)
+        public override void UseProduct(int items)
         {
             int smallestMultiple = 0;
             int batchsize;
@@ -38,7 +38,29 @@ namespace PieShop.InventoryManagement.ProductManagement
                     break;
                 }
             }
-            UseItem(batchsize);
+            base.UseProduct(batchsize);
+        }
+        public override void LongDescription()
+        {
+            Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}, Amount Per Box = {AmountPerBox}");
+            if (IsBelowStockThreshold)
+            {
+                Log("STOCK IS LOW!!");
+            }
+        }
+        public override void AddIntoStock(int amount)
+        {
+            int newStock = AmountInStock + amount * AmountPerBox;
+            if (newStock > MaxItemsInStock)
+            {
+                AmountInStock = MaxItemsInStock;
+                Log($"Stock overflow, only {newStock - AmountInStock} were taken");
+            }
+            else
+            {
+                AmountInStock += amount * AmountPerBox;
+            }
+            UpdateLowStock();
         }
     }
 }
