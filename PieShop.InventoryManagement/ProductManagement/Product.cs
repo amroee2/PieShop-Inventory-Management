@@ -52,10 +52,6 @@ namespace PieShop.InventoryManagement.ProductManagement
         public int AmountInStock { get; private set; }
         public bool IsBelowStockThreshold { get; private set; }
 
-        public Product()
-        {
-        }
-
         public Product(int id, string name, string? description, UnitType unitType, Price price, int maxItemsInStock)
         {
             MaxItemsInStock = maxItemsInStock;
