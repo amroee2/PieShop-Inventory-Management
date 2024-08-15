@@ -35,7 +35,7 @@ namespace PieShop.InventoryManagement.Utilities
             }
         }
 
-        private static void CloneProduct()
+        public static void CloneProduct()
         {
             Console.WriteLine("Enter ID of the product");
             int id = Convert.ToInt32(Console.ReadLine());
@@ -43,13 +43,19 @@ namespace PieShop.InventoryManagement.Utilities
             Product newProduct = (Product) product.Clone();
             Console.WriteLine("Enter the ID of the new product");
             id = Convert.ToInt32(Console.ReadLine());
+            Product product2 = CheckIfProductExists(id);
+            if (product2 != null)
+            {
+                Console.WriteLine("A product with this ID already exists");
+                return;
+            }
             newProduct.Id = id;
             Products.Add(newProduct);
         }
 
         public static void ViewProductDetails()
         {
-            Console.WriteLine("Product id:\n");
+            Console.Write("Product id:");
             int id = Convert.ToInt32(Console.ReadLine());
             Product selectedProduct = null;
 
@@ -62,13 +68,13 @@ namespace PieShop.InventoryManagement.Utilities
                     break;
                 }
             }
-            Console.WriteLine("What do you want to do\n1- Use Product\n2- Go Back");
+            Console.WriteLine("\nWhat do you want to do\n1- Use Product\n2- Go Back");
             int op = Convert.ToInt32(Console.ReadLine());
             switch (op)
             {
                 case 2: return;
                 case 1:
-                    Console.WriteLine("Enter the amount");
+                    Console.Write("Enter the amount:");
                     int amount = Convert.ToInt32(Console.ReadLine());
                     selectedProduct.UseProduct(amount);
                     break;
@@ -76,55 +82,68 @@ namespace PieShop.InventoryManagement.Utilities
         }
         private static void AddNewProduct()
         {
-            Console.Write("Id:");
-            int id = Convert.ToInt32(Console.ReadLine());
-
-            Console.Write("Name:");
-            string name = Console.ReadLine();
-
-            Console.Write("Maximum items in stock:");
-            int maxItems = Convert.ToInt32(Console.ReadLine());
-
-            Console.Write("Description:");
-            string? description = Console.ReadLine();
-            Console.Write("Price:");
-            int price = Convert.ToInt32(Console.ReadLine());
-            Currency currency;
-            while (true)
+            try
             {
-                Console.Write("Enter the currency (Dollar, Euro, Pound): ");
-                string input = Console.ReadLine();
-
-                if (Enum.TryParse(input, true, out currency))
+                Console.Write("Id:");
+                int id = Convert.ToInt32(Console.ReadLine());
+                Product checkProduct = CheckIfProductExists(id);
+                if (checkProduct != null)
                 {
-                    break;
+                    Console.WriteLine("A product with this ID already exists");
+                    return;
                 }
-            }
-            UnitType unitType = UnitType.PerKg;
-            Console.WriteLine("\nProduct Type?\n1- Normal Product\n2- FreshProduct\n3- Boxed Product");
-            int productType = Convert.ToInt32(Console.ReadLine());
-            Product product = null;
-            switch (productType)
+                Console.Write("Name:");
+                string name = Console.ReadLine();
+
+                Console.Write("Maximum items in stock:");
+                int maxItems = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Description:");
+                string? description = Console.ReadLine();
+                Console.Write("Price:");
+                int price = Convert.ToInt32(Console.ReadLine());
+                Currency currency;
+                while (true)
+                {
+                    Console.Write("Enter the currency (Dollar, Euro, Pound): ");
+                    string input = Console.ReadLine();
+
+                    if (Enum.TryParse(input, true, out currency))
+                    {
+                        break;
+                    }
+                }
+                UnitType unitType = UnitType.PerKg;
+                Console.WriteLine("\nProduct Type?\n1- Normal Product\n2- FreshProduct\n3- Boxed Product");
+                int productType = Convert.ToInt32(Console.ReadLine());
+                Product product = null;
+                switch (productType)
+                {
+                    case 1:
+                        unitType = getunitType(unitType);
+                        product = new RegularProduct(id, name, description, unitType, new Price(price, currency), maxItems);
+                        break;
+                    case 2:
+                        product = new FreshProduct(id, name, description, unitType, new Price(price, currency), maxItems);
+                        break;
+                    case 3:
+                        Console.WriteLine("Amount per box?");
+                        int amount = Convert.ToInt32(Console.ReadLine());
+                        product = new BoxedProduct(id, name, description, new Price(price, currency), maxItems, amount);
+                        break;
+                }
+                if (product != null)
+                {
+                    product.LongDescription();
+                    Products.Add(product);
+                }
+            } 
+            catch (Exception e)
             {
-                case 1:
-                    unitType = getunitType(unitType);
-                    product = new RegularProduct(id, name, description, unitType, new Price(price, currency), maxItems);
-                    break;
-                case 2:
-                    product = new FreshProduct(id, name, description,unitType, new Price(price, currency), maxItems);
-                    break;
-                case 3:
-                    Console.WriteLine("Amount per box?");
-                    int amount = Convert.ToInt32(Console.ReadLine());
-                    product = new BoxedProduct(id, name, description, new Price(price, currency), maxItems, amount);
-                    break;
-            }
-            if (product != null)
-            {
-                product.LongDescription();
-                Products.Add(product);
+                Console.WriteLine("Issue with your input");
             }
         }
+            
 
         private static void ViewAllProducts()
         {

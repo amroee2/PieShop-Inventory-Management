@@ -52,32 +52,40 @@ namespace PieShop.InventoryManagement.Utilities
 
         public static void AddNewOrder()
         {
-            Order order = new Order();
-            while (true)
+            try
             {
-                Console.WriteLine("1- Add new Item\n2- Finish Order");
-                int op = Convert.ToInt32(Console.ReadLine());
-                switch (op)
+                Order order = new Order();
+                while (true)
                 {
-                    case 1:
-                        Console.WriteLine("Order Item Id:");
-                        int id = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("1- Add new Item\n2- Finish Order");
+                    int op = Convert.ToInt32(Console.ReadLine());
+                    switch (op)
+                    {
+                        case 1:
+                            Console.WriteLine("Order Item Id:");
+                            int id = Convert.ToInt32(Console.ReadLine());
 
-                        Console.WriteLine("Product Id:");
-                        int productId = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Product Id:");
+                            int productId = Convert.ToInt32(Console.ReadLine());
 
-                        Console.WriteLine("Name:");
-                        string name = Console.ReadLine();
+                            Console.WriteLine("Name:");
+                            string name = Console.ReadLine();
 
-                        Console.WriteLine("Amount: ");
-                        int amount = Convert.ToInt32(Console.ReadLine());
-                        order.OrderItems.Add(new OrderItem { Id = id, ProductName = name, ProductId = productId, AmountOrdered = amount });
-                        break;
-                    case 2:
-                        order.ShowOrderDetails();
-                        Orders.Add(order);
-                        return;
+                            Console.WriteLine("Amount: ");
+                            int amount = Convert.ToInt32(Console.ReadLine());
+                            order.OrderItems.Add(new OrderItem { Id = id, ProductName = name, ProductId = productId, AmountOrdered = amount });
+                            break;
+                        case 2:
+                            order.ShowOrderDetails();
+                            Orders.Add(order);
+                            return;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("**Issue with your input**");
+                OrderManagementOperation();
             }
         }
         public static void UpdateStock(Order order)
