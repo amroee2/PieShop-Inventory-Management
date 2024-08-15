@@ -1,12 +1,4 @@
-﻿using PieShop.InventoryManagement.General;
-using PieShop.InventoryManagement.OrderManagement;
-using PieShop.InventoryManagement.ProductManagement;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PieShop.InventoryManagement.ProductManagement;
 
 namespace PieShop.InventoryManagement.Utilities
 {
@@ -16,7 +8,6 @@ namespace PieShop.InventoryManagement.Utilities
         {
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("Welcome!\n1: Inventory Management\n2: Order Management\n3: Settings\n" +
     "4: Save all data\n0: Close Application");
                 int operation = Convert.ToInt32(Console.ReadLine());

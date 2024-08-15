@@ -50,7 +50,7 @@ namespace PieShop.InventoryManagement.ProductManagement
         }
         public override void AddIntoStock(int amount)
         {
-            int newStock = AmountInStock + amount * AmountPerBox;
+            int newStock = AmountInStock + (amount * AmountPerBox);
             if (newStock > MaxItemsInStock)
             {
                 AmountInStock = MaxItemsInStock;
@@ -61,6 +61,10 @@ namespace PieShop.InventoryManagement.ProductManagement
                 AmountInStock += amount * AmountPerBox;
             }
             UpdateLowStock();
+        }
+        public override object Clone()
+        {
+            return new RegularProduct(0, this.Name, this.Description, this.UnitType, this.Price, this.MaxItemsInStock);
         }
     }
 }

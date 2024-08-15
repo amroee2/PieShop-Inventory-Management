@@ -80,9 +80,26 @@ namespace PieShop.InventoryManagement
             int i = 0;
             foreach (Product product in ProductUtilities.Products)
             {
-                inevntory[i] = $"{product.Id};{product.Name};{product.Description};{product.UnitType};" +
-                    $"{product.Price.ItemPrice};{product.Price.Currency};{product.MaxItemsInStock};{product.AmountInStock}";
-                i++;
+                if (product is FreshProduct)
+                {
+                    inevntory[i] = $"{product.Id};{product.Name};{product.Description};{product.UnitType};" +
+                        $"{product.Price.ItemPrice};{product.Price.Currency};{product.MaxItemsInStock};{product.AmountInStock};3";
+                    i++;
+                }
+                else if (product is RegularProduct)
+                {
+                    inevntory[i] = $"{product.Id};{product.Name};{product.Description};{product.UnitType};" +
+                        $"{product.Price.ItemPrice};{product.Price.Currency};{product.MaxItemsInStock};{product.AmountInStock};1";
+                    i++;
+                }
+                else
+                {
+                    BoxedProduct box = (BoxedProduct ) product;
+                    inevntory[i] = $"{product.Id};{product.Name};{product.Description};{product.UnitType};" +
+                        $"{product.Price.ItemPrice};{product.Price.Currency};{product.MaxItemsInStock};{product.AmountInStock/box.AmountPerBox};2;{box.AmountPerBox}";
+                    i++;
+                }
+
             }
             File.WriteAllLines(fileName, inevntory);
         }

@@ -22,5 +22,9 @@ namespace PieShop.InventoryManagement.ProductManagement
                 Log("STOCK IS LOW!!");
             }
         }
+        public override object Clone()
+        {
+            return new RegularProduct(0, this.Name, this.Description, this.UnitType, this.Price, this.MaxItemsInStock);
+        }
     }
 }
