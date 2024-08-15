@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PieShop.InventoryManagement.ProductManagement
+﻿namespace PieShop.InventoryManagement.ProductManagement
 {
-    public partial class Product
+    public abstract partial class Product
     {
         protected void UpdateLowStock()
         {

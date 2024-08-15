@@ -11,10 +11,6 @@ namespace PieShop.InventoryManagement.Utilities
             while (true)
             {
                 Console.WriteLine("Inventory Management\n");
-                foreach (Product product in Products)
-                {
-                    product.ShortDescription();
-                }
                 Console.WriteLine("1: View details of a product\n2: Add a new product\n" +
                     "3: Clone product\n4: View all Products details\n0: Back to main menu");
                 int operation = Convert.ToInt32(Console.ReadLine());
@@ -38,7 +34,7 @@ namespace PieShop.InventoryManagement.Utilities
         {
             Console.WriteLine("Product id:\n");
             int id = Convert.ToInt32(Console.ReadLine());
-            Product selectedProduct = new Product();
+            Product selectedProduct = null;
 
             foreach (Product product in Products)
             {
@@ -95,7 +91,7 @@ namespace PieShop.InventoryManagement.Utilities
             {
                 case 1:
                     unitType = getunitType(unitType);
-                    product = new Product(id, name, description, unitType, new Price(price, currency), maxItems);
+                    product = new RegularProduct(id, name, description, unitType, new Price(price, currency), maxItems);
                     break;
                 case 2:
                     product = new FreshProduct(id, name, description,unitType, new Price(price, currency), maxItems);

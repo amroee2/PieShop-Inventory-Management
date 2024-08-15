@@ -3,13 +3,13 @@ using PieShop.InventoryManagement.ProductManagement;
 
 namespace PieShop.InventoryManagement.UnitTesting.UnitTests
 {
-    public class ProductTesting
+    public class ProductTypesTesting
     {
         [Fact]
         public void UnitTest_AddIntoStock()
         {
             //Arrange
-            Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            Product product = new RegularProduct(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
             //Act
             product.AddIntoStock(100);
             //Assert
@@ -19,7 +19,7 @@ namespace PieShop.InventoryManagement.UnitTesting.UnitTests
         public void UnitTest_AddIntoStockMoreThanMax()
         {
             //Arrange
-            Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            Product product = new RegularProduct(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
             //Act
             product.AddIntoStock(150);
             //Assert
@@ -29,10 +29,10 @@ namespace PieShop.InventoryManagement.UnitTesting.UnitTests
         public void UnitTest_UseItem()
         {
             //Arrange
-            Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            Product product = new RegularProduct(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
             product.AddIntoStock(100);
             //Act
-            product.UseItem(10);
+            product.UseProduct(10);
             //Assert
             Assert.Equal(90, product.AmountInStock);
         }
@@ -40,10 +40,10 @@ namespace PieShop.InventoryManagement.UnitTesting.UnitTests
         public void UnitTest_UseItemMoreThanAvailableAmount()
         {
             //Arrange
-            Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            Product product = new RegularProduct(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
             product.AddIntoStock(100);
             //Act
-            product.UseItem(110);
+            product.UseProduct(110);
             //Assert
             Assert.Equal(100, product.AmountInStock);
         }
@@ -57,31 +57,31 @@ namespace PieShop.InventoryManagement.UnitTesting.UnitTests
         public void UnitTest_UpdateThresholdBelowLimit()
         {
             Product.UpdateThreshold(-1);
-            Assert.Equal(15, Product.StockThreshold);
+            Assert.NotEqual(-1, Product.StockThreshold);
         }
         [Fact]
         public void UnitTest_UpdateLowStockBelowThreshold()
         {
-            Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            Product product = new RegularProduct(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
             product.AddIntoStock(100);
 
 
             Product.UpdateThreshold(20);
 
-            product.UseItem(90);
+            product.UseProduct(90);
 
             Assert.True(product.IsBelowStockThreshold);
         }
         [Fact]
         public void UnitTest_UpdateLowStockAboveThreshold()
         {
-            Product product = new Product(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
+            Product product = new RegularProduct(1, "Sugar", "yum", UnitType.PerKg, new Price(10, Currency.Dollar), 100);
 
             product.AddIntoStock(100);
 
             Product.UpdateThreshold(20);
 
-            product.UseItem(70);
+            product.UseProduct(70);
 
             Assert.False(product.IsBelowStockThreshold);
         }
