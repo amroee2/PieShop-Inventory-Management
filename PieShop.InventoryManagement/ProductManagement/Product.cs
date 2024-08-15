@@ -49,9 +49,13 @@ namespace PieShop.InventoryManagement.ProductManagement
 
         public UnitType UnitType { get; set; }
         public Price Price { get; set; }
-        public int AmountInStock { get; private set; }
-        public bool IsBelowStockThreshold { get; private set; }
+        public int AmountInStock { get; protected set; }
+        public bool IsBelowStockThreshold { get; protected set; }
 
+        public Product()
+        {
+
+        }
         public Product(int id, string name, string? description, UnitType unitType, Price price, int maxItemsInStock)
         {
             MaxItemsInStock = maxItemsInStock;
@@ -70,7 +74,7 @@ namespace PieShop.InventoryManagement.ProductManagement
             Name = name;
         }
 
-        public void UseItem(int amount)
+        public virtual void UseProduct(int amount)
         {
             if (amount > AmountInStock)
             {
@@ -86,7 +90,7 @@ namespace PieShop.InventoryManagement.ProductManagement
             }
         }
 
-        public void AddIntoStock(int amount)
+        public virtual void AddIntoStock(int amount)
         {
             int newStock = AmountInStock + amount;
             if (newStock > MaxItemsInStock)
@@ -101,16 +105,11 @@ namespace PieShop.InventoryManagement.ProductManagement
             UpdateLowStock();
         }
 
-        public void AddIntoStock()
-        {
-            AmountInStock++;
-        }
-
         public void ShortDescription()
         {
             Log($"{Id}. {Name}");
         }
-        public void LongDescription()
+        public virtual void LongDescription()
         {
             Console.WriteLine($"\nID = {Id}, Name = {Name}, Unit = {UnitType}, Price = {Price}, Max Stock = {MaxItemsInStock}, Amount in ineventory = {AmountInStock}");
             if (IsBelowStockThreshold)

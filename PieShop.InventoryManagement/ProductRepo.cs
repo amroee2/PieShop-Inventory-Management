@@ -31,7 +31,21 @@ namespace PieShop.InventoryManagement
                         Enum.TryParse(parts[5], true, out currency);
                         int maximumInStock = int.Parse(parts[6]);
                         int amount = int.Parse(parts[7]);
-                        Product product = new Product(id, name, description, unitType, new Price(price, currency), maximumInStock);
+                        int type = int.Parse(parts[8]);
+                        Product product = null;
+                        switch (type)
+                        {
+                            case 1:
+                                product = new Product(id, name, description, unitType, new Price(price, currency), maximumInStock);
+                                break;
+                            case 2:
+                                int amountPerBox = int.Parse(parts[9]);
+                                product = product = new BoxedProduct(id, name, description, new Price(price, currency), maximumInStock, amountPerBox);
+                                break;
+                            case 3:
+                                product = new FreshProduct(id, name, description, unitType, new Price(price, currency), maximumInStock);
+                                break;
+                        }
                         product.AddIntoStock(amount);
                         ProductUtilities.Products.Add(product);
                     }

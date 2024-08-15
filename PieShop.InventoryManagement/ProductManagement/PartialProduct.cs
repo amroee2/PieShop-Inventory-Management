@@ -8,7 +8,7 @@ namespace PieShop.InventoryManagement.ProductManagement
 {
     public partial class Product
     {
-        private void UpdateLowStock()
+        protected void UpdateLowStock()
         {
             if (AmountInStock <= StockThreshold)
             {
@@ -20,7 +20,7 @@ namespace PieShop.InventoryManagement.ProductManagement
             }
         }
 
-        private void Log(string message)
+        protected void Log(string message)
         {
             Console.WriteLine(message);
         }
