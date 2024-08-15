@@ -141,6 +141,7 @@ namespace PieShop.InventoryManagement.Utilities
             catch (Exception e)
             {
                 Console.WriteLine("Issue with your input");
+                IneventoryManagementOperation();
             }
         }
             
