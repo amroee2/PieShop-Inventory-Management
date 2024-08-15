@@ -8,6 +8,7 @@ namespace PieShop.InventoryManagement.Utilities
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Welcome!\n1: Inventory Management\n2: Order Management\n3: Settings\n" +
     "4: Save all data\n0: Close Application");
                 int operation = Convert.ToInt32(Console.ReadLine());
@@ -49,7 +50,7 @@ namespace PieShop.InventoryManagement.Utilities
         }
         public static void SaveAllData()
         {
-
+            ProductRepo.WriteFile();
         }
     }
 }

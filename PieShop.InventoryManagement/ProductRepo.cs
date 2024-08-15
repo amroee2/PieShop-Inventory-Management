@@ -7,7 +7,6 @@ namespace PieShop.InventoryManagement
     {
         public static void ReadFile()
         {
-
             string fileName = "C:\\Users\\amro qadadha\\source\\repos\\PieShop.InventoryManagement\\PieShop.InventoryManagement\\Inventory.txt";
             try
             {
